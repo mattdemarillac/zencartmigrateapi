@@ -1,0 +1,6 @@
+{
+    "require": {
+        "elvanto/picodb": "^1.0",
+        "lstrojny/functional-php": "~1.2"
+    }
+}
