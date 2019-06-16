@@ -8,10 +8,10 @@ use function Functional\map;
 
 include 'Database.php';
 
-include 'Mapper.php';
-include 'Definition.php';
-include 'Mapping.php';
-include 'Property.php';
+include "lib/database/Mapper.php";
+include 'lib/database/Definition.php';
+include 'lib/database/Mapping.php';
+include 'lib/database/Property.php';
 
 header('Content-Type: application/json');
 
