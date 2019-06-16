@@ -2,6 +2,26 @@
 
 namespace Migrate;
 
+// _dbauth.php needs to be created as such.
+//trait dbauth
+//{
+//    private function setConnection()
+//    {
+//        $username = "admin";
+//        $password = "addddmin";
+//        $host = "127.0.0.1";
+//        $db = 'zencartdb';
+//
+//        $this->db = new Database([
+//            'driver' => 'mysql',
+//            'hostname' => $host,
+//            'username' => $username,
+//            'password' => $password,
+//            'database' => $db,
+//            'timeout' => 999999999
+//        ]);
+//    }
+//}
 include "_dbauth.php";
 
 use PicoDb\Database;
