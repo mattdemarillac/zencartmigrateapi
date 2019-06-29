@@ -109,6 +109,63 @@ class DatabaseMap
     }
 
     public function attributes_global () {
+        $attribute_terms =  $tbl_categories_description = (new Definition(
+            'tbl_products_options_values',
+            ['products_options_values_id']
+        ))->withColumns(
+            'products_options_values_name'
+        );
 
+        $attributes_to_terms =  (new Definition(
+            'tbl_products_options_values_to_products_options',
+            ['products_options_values_to_products_options_id'])
+        )->withMany($attribute_terms, 'terms', 'products_options_values_id', 'products_options_values_id'
+        )->withColumns(
+            'products_options_id',
+            'products_options_values_id'
+        );
+
+        $attributes = (new Definition(
+            'tbl_products_options',
+            ['products_options_id'])
+        )->withMany($attributes_to_terms, 'to_terms', 'products_options_id', 'products_options_id'
+        )->withColumns(
+            'products_options_id',
+            'products_options_name'
+        );
+
+        return $this->mapper
+            ->mapping($attributes);
+    }
+
+    /**
+     * @param $text
+     * @return false|string|string[]|null
+     */
+    static public function slugify($text)
+    {
+        // replace non letter or digits by -
+        $text = preg_replace('~[^\pL\d]+~u', '-', $text);
+
+        // transliterate
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+
+        // remove unwanted characters
+        $text = preg_replace('~[^-\w]+~', '', $text);
+
+        // trim
+        $text = trim($text, '-');
+
+        // remove duplicate -
+        $text = preg_replace('~-+~', '-', $text);
+
+        // lowercase
+        $text = strtolower($text);
+
+        if (empty($text)) {
+            return 'n-a';
+        }
+
+        return $text;
     }
 }
