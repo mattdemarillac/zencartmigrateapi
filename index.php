@@ -22,6 +22,9 @@ $db = new DatabaseMap();
 if (isset($_GET['products'])) {
     $products = $db->productsMapper()->findAll();
     echo json_encode($products);
+} else if (isset($_GET['products_attributes'])) {
+    $products_attributes = $db->productsAttributesMapper()->findAll();
+    echo json_encode($products_attributes);
 } else if (isset($_GET['attributes'])) {
     $attributes = $db->attributes_global()->findAll();
 
@@ -29,7 +32,7 @@ if (isset($_GET['products'])) {
         return [
             'id' => (int) $attribute['products_options_id'],
             'name' => $attribute['products_options_name'],
-            'slug' => 'pa_' . $db::slugify($attribute['products_options_name']),
+            'slug' => $db::slugify($attribute['products_options_name']),
             'type' => 'select',
             'order_by' => 'menu_order',
             'has_archives' => true,
