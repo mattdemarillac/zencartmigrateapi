@@ -47,7 +47,38 @@ class DatabaseMap
         $this->setConnection();
         $this->mapper = new Mapper($this->db);
     }
-    
+
+    public function productsAttributesMapper()
+    {
+        $tbl_products_attributes_stock = (new Definition(
+            'tbl_products_with_attributes_stock',
+            ['products_id']
+        ))->withColumns(
+            'products_id',
+            'stock_attributes',
+            'quantity',
+            'sort'
+        );
+
+        $tbl_products_attributes = (new Definition(
+            'tbl_products_attributes',
+            ['products_id']
+        ))->withMany(
+            $tbl_products_attributes_stock, 'stock', 'products_id', 'products_id'
+        )->withColumns(
+            'products_id',
+            'options_values_id',
+            'options_values_price',
+            'price_prefix',
+            'products_attributes_weight',
+            'attributes_discounted',
+            'attributes_qty_prices'
+        );
+
+        return $this->mapper
+            ->mapping($tbl_products_attributes);
+    }
+
     /**
      * NOTE: mysql in oob IS currently accepting all incoming connections !!!!!
      */
